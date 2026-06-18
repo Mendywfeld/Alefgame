@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#a78bfa">
+  <meta name="description" content="משחק לימוד אותיות עבריות לפעוטות">
+  <title>משחק האות</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ─── Top Bar ──────────────────────────────────────────── -->
+  <header id="top-bar">
+    <div id="star-counter">
+      <span id="star-icon">★</span>
+      <span id="star-count">0</span>
+    </div>
+    <div id="progress-indicator">
+      <span id="unlocked-count">5</span><span>/27</span>
+    </div>
+    <button id="parent-btn" aria-label="הגדרות הורים">⚙</button>
+  </header>
+
+  <!-- ─── No-Hebrew-Voice Warning ──────────────────────────── -->
+  <div id="voice-warning" hidden role="alert">
+    ⚠️ לא נמצא קול עברי במכשיר זה. ניתן להוסיף קול עברי בהגדרות המכשיר.
+  </div>
+
+  <!-- ─── Main Game Screen ─────────────────────────────────── -->
+  <main id="game-screen">
+
+    <div id="prompt-area">
+      <button id="replay-btn" aria-label="השמע שוב">🔊</button>
+    </div>
+
+    <div id="cards-grid" role="group" aria-label="בחר את האות הנכונה"></div>
+
+  </main>
+
+  <!-- ─── Celebration Screen (10-star milestone) ───────────── -->
+  <div id="celebration-screen" hidden aria-live="assertive">
+    <div id="balloon-container" aria-hidden="true"></div>
+    <div id="celebration-content">
+      <div id="celebration-stars" aria-hidden="true">⭐⭐⭐</div>
+      <div id="celebration-text">וואו!<br>עשרה כוכבים!</div>
+    </div>
+  </div>
+
+  <!-- ─── Parent Math-Gate Modal ───────────────────────────── -->
+  <div id="parent-gate" hidden role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div id="parent-gate-inner">
+      <h2 id="gate-title">🔐 שאלה להורה</h2>
+      <p id="math-question"></p>
+      <input
+        type="number"
+        id="math-answer"
+        inputmode="numeric"
+        min="0"
+        max="20"
+        autocomplete="off"
+        aria-label="תשובה"
+      >
+      <div id="gate-buttons">
+        <button id="gate-cancel">ביטול</button>
+        <button id="gate-submit">אישור ✓</button>
+      </div>
+      <p id="gate-error" hidden role="alert">❌ תשובה שגויה, נסה שוב</p>
+    </div>
+  </div>
+
+  <!-- ─── Parent Dashboard ─────────────────────────────────── -->
+  <div id="parent-dashboard" hidden role="dialog" aria-modal="true" aria-labelledby="dashboard-title">
+    <div id="dashboard-inner">
+      <h2 id="dashboard-title">📊 לוח בקרה להורים</h2>
+
+      <div id="dashboard-controls">
+        <button id="btn-reset-progress">🔄 אפס התקדמות</button>
+        <button id="btn-reset-stars">⭐ אפס כוכבים</button>
+        <button id="btn-unlock-all">🔓 פתח הכל</button>
+        <button id="btn-lock-beginner">🔒 נעל למתחילים</button>
+      </div>
+
+      <div id="dashboard-toggles">
+        <label>
+          <input type="checkbox" id="toggle-special-mode">
+          <span>מצב אות מיוחדת (כ/ך, מ/ם, נ/ן...)</span>
+        </label>
+        <label>
+          <input type="checkbox" id="toggle-progression">
+          <span>פתיחה הדרגתית של אותיות</span>
+        </label>
+      </div>
+
+      <div id="stats-table-container">
+        <table id="stats-table">
+          <thead>
+            <tr>
+              <th>אות</th>
+              <th>שם</th>
+              <th>✓</th>
+              <th>✗</th>
+              <th>דיוק</th>
+            </tr>
+          </thead>
+          <tbody id="stats-tbody"></tbody>
+        </table>
+      </div>
+
+      <button id="dashboard-close">סגור</button>
+    </div>
+  </div>
+
+  <!-- ─── Confetti Canvas (injected particles) ─────────────── -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- ─── Mute Toggle ──────────────────────────────────────── -->
+  <button id="mute-btn" aria-label="השתק צלילים">🔊</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
