@@ -21,10 +21,10 @@ const LETTER_NAMES = {
 // letter names are actually said (e.g. "alef", "hey", "vav" vs. unrecognisable Hebrew spellings).
 const LETTER_PHONETICS = {
   'א': 'Alef',        'ב': 'Veis',          'ג': 'Gimel',
-  'ד': 'Daled',       'ה': 'Hey',            'ו': 'Vov',
+  'ד': 'Dawlid',      'ה': 'Hey',            'ו': 'Vov',
   'ז': 'Zayin',       'ח': 'Ches',           'ט': 'Tes',
   'י': 'Yud',         'כ': 'Chuf',           'ך': 'Langer Chuf',
-  'ל': 'Lamed',       'מ': 'Mem',            'ם': 'Shluss Mem',
+  'ל': 'Lomid',       'מ': 'Mem',            'ם': 'Shluss Mem',
   'נ': 'Nun',         'ן': 'Langer Nun',     'ס': 'Samech',
   'ע': 'Ayin',        'פ': 'Fey',            'ף': 'Langer Fey',
   'צ': 'Tzaddik',     'ץ': 'Langer Tzaddik', 'ק': 'Kuf',
