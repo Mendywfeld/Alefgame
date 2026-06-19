@@ -5,26 +5,30 @@
    ============================================================ */
 
 const LETTER_NAMES = {
-  'א': 'אלף', 'ב': 'בית',  'ג': 'גימל', 'ד': 'דלת',
-  'ה': 'הא',  'ו': 'וו',   'ז': 'זין',  'ח': 'חית',
-  'ט': 'טית', 'י': 'יוד',  'כ': 'כף',   'ך': 'כף',
-  'ל': 'למד', 'מ': 'מם',   'ם': 'מם',   'נ': 'נון',
-  'ן': 'נון', 'ס': 'סמך',  'ע': 'עין',  'פ': 'פה',
-  'ף': 'פה',  'צ': 'צדי',  'ץ': 'צדי',  'ק': 'קוף',
-  'ר': 'ריש', 'ש': 'שין',  'ת': 'תו',
+  'א': 'Alef',        'ב': 'Veis',          'ג': 'Gimel',
+  'ד': 'Daled',       'ה': 'Hey',            'ו': 'Vov',
+  'ז': 'Zayin',       'ח': 'Ches',           'ט': 'Tes',
+  'י': 'Yud',         'כ': 'Chuf',           'ך': 'Langer Chuf',
+  'ל': 'Lamed',       'מ': 'Mem',            'ם': 'Shluss Mem',
+  'נ': 'Nun',         'ן': 'Langer Nun',     'ס': 'Samech',
+  'ע': 'Ayin',        'פ': 'Fey',            'ף': 'Langer Fey',
+  'צ': 'Tzaddik',     'ץ': 'Langer Tzaddik', 'ק': 'Kuf',
+  'ר': 'Reish',       'ש': 'Shin',           'ת': 'Sov',
 };
 
 // English phonetic spellings — used in TTS so the he-IL voice pronounces letter names correctly.
 // Hebrew TTS engines render embedded English words with English phonetics, which matches how
 // letter names are actually said (e.g. "alef", "hey", "vav" vs. unrecognisable Hebrew spellings).
 const LETTER_PHONETICS = {
-  'א': 'alef',   'ב': 'bet',    'ג': 'gimel',  'ד': 'dalet',
-  'ה': 'hey',    'ו': 'vav',    'ז': 'zayin',  'ח': 'khet',
-  'ט': 'tet',    'י': 'yod',    'כ': 'kaf',    'ך': 'kaf',
-  'ל': 'lamed',  'מ': 'mem',    'ם': 'mem',    'נ': 'nun',
-  'ן': 'nun',    'ס': 'samekh', 'ע': 'ayin',   'פ': 'pe',
-  'ף': 'pe',     'צ': 'tsadi',  'ץ': 'tsadi',  'ק': 'kuf',
-  'ר': 'resh',   'ש': 'shin',   'ת': 'tav',
+  'א': 'Alef',        'ב': 'Veis',          'ג': 'Gimel',
+  'ד': 'Daled',       'ה': 'Hey',            'ו': 'Vov',
+  'ז': 'Zayin',       'ח': 'Ches',           'ט': 'Tes',
+  'י': 'Yud',         'כ': 'Chuf',           'ך': 'Langer Chuf',
+  'ל': 'Lamed',       'מ': 'Mem',            'ם': 'Shluss Mem',
+  'נ': 'Nun',         'ן': 'Langer Nun',     'ס': 'Samech',
+  'ע': 'Ayin',        'פ': 'Fey',            'ף': 'Langer Fey',
+  'צ': 'Tzaddik',     'ץ': 'Langer Tzaddik', 'ק': 'Kuf',
+  'ר': 'Reish',       'ש': 'Shin',           'ת': 'Sov',
 };
 
 const ALL_LETTERS = Object.keys(LETTER_NAMES); // 27 symbols
@@ -639,8 +643,7 @@ function renderCards(letters) {
 }
 
 function updateTopBar() {
-  document.getElementById('star-count').textContent    = state.stars;
-  document.getElementById('unlocked-count').textContent = getUnlockedLetters().length;
+  document.getElementById('star-count').textContent = state.stars;
 }
 
 function animateCard(letter, type) {
