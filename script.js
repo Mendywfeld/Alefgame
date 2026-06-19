@@ -14,6 +14,19 @@ const LETTER_NAMES = {
   'ר': 'ריש', 'ש': 'שין',  'ת': 'תו',
 };
 
+// English phonetic spellings — used in TTS so the he-IL voice pronounces letter names correctly.
+// Hebrew TTS engines render embedded English words with English phonetics, which matches how
+// letter names are actually said (e.g. "alef", "hey", "vav" vs. unrecognisable Hebrew spellings).
+const LETTER_PHONETICS = {
+  'א': 'alef',   'ב': 'bet',    'ג': 'gimel',  'ד': 'dalet',
+  'ה': 'hey',    'ו': 'vav',    'ז': 'zayin',  'ח': 'khet',
+  'ט': 'tet',    'י': 'yod',    'כ': 'kaf',    'ך': 'kaf',
+  'ל': 'lamed',  'מ': 'mem',    'ם': 'mem',    'נ': 'nun',
+  'ן': 'nun',    'ס': 'samekh', 'ע': 'ayin',   'פ': 'pe',
+  'ף': 'pe',     'צ': 'tsadi',  'ץ': 'tsadi',  'ק': 'kuf',
+  'ר': 'resh',   'ש': 'shin',   'ת': 'tav',
+};
+
 const ALL_LETTERS = Object.keys(LETTER_NAMES); // 27 symbols
 
 // Letters where both the regular and final form share the same spoken name
@@ -510,7 +523,7 @@ function startRound() {
 
   // Speak prompt after cards animate in
   setTimeout(() => {
-    speak(`איפה האות ${LETTER_NAMES[currentTarget]}`);
+    speak(`איפה האות ${LETTER_PHONETICS[currentTarget]}`);
   }, 430);
 }
 
@@ -532,7 +545,7 @@ function handleAnswer(tappedLetter) {
     launchConfetti();
 
     // Build speech feedback
-    const name     = LETTER_NAMES[currentTarget];
+    const name     = LETTER_PHONETICS[currentTarget];
     const isMirror = tappedLetter !== currentTarget &&
                      PAIRED_LETTERS[currentTarget] === tappedLetter;
 
@@ -643,7 +656,7 @@ function animateCard(letter, type) {
 
 function replayPrompt() {
   if (currentTarget) {
-    speak(`איפה האות ${LETTER_NAMES[currentTarget]}`);
+    speak(`איפה האות ${LETTER_PHONETICS[currentTarget]}`);
   }
 }
 
