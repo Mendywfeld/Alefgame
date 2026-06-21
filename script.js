@@ -16,15 +16,14 @@ const LETTER_NAMES = {
   'ר': 'Reish',       'ש': 'Shin',           'ת': 'Sov',
 };
 
-// English phonetic spellings — used in TTS so the he-IL voice pronounces letter names correctly.
-// Hebrew TTS engines render embedded English words with English phonetics, which matches how
-// letter names are actually said (e.g. "alef", "hey", "vav" vs. unrecognisable Hebrew spellings).
+// Phonetic spellings for en-US TTS — letter names are spoken by an English voice
+// so pronunciation is accurate for Ashkenazic names (Lomid, Dawlid, Veis, etc.)
 const LETTER_PHONETICS = {
   'א': 'Alef',        'ב': 'Veis',          'ג': 'Gimel',
-  'ד': 'Daled',       'ה': 'Hey',            'ו': 'Vov',
+  'ד': 'Dawlid',      'ה': 'Hey',            'ו': 'Vov',
   'ז': 'Zayin',       'ח': 'Ches',           'ט': 'Tes',
   'י': 'Yud',         'כ': 'Chuf',           'ך': 'Langer Chuf',
-  'ל': 'Lamed',       'מ': 'Mem',            'ם': 'Shluss Mem',
+  'ל': 'Lomid',       'מ': 'Mem',            'ם': 'Shluss Mem',
   'נ': 'Nun',         'ן': 'Langer Nun',     'ס': 'Samech',
   'ע': 'Ayin',        'פ': 'Fey',            'ף': 'Langer Fey',
   'צ': 'Tzaddik',     'ץ': 'Langer Tzaddik', 'ק': 'Kuf',
@@ -140,6 +139,7 @@ function saveState() {
    ============================================================ */
 
 let hebrewVoice = null;
+let englishVoice = null;
 
 function findBestHebrewVoice() {
   const voices = speechSynthesis.getVoices();
@@ -168,6 +168,18 @@ function findBestHebrewVoice() {
   return named || null;
 }
 
+function findBestEnglishVoice() {
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  const googleEn = voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('google'));
+  if (googleEn) return googleEn;
+  const msEn = voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('microsoft'));
+  if (msEn) return msEn;
+  const enUS = voices.find(v => v.lang === 'en-US');
+  if (enUS) return enUS;
+  return voices.find(v => v.lang.startsWith('en')) || null;
+}
+
 function initVoice() {
   const voice = findBestHebrewVoice();
   if (voice) {
@@ -180,6 +192,7 @@ function initVoice() {
       document.getElementById('voice-warning').hidden = false;
     }
   }
+  englishVoice = findBestEnglishVoice();
 }
 
 // iOS Safari: call speechSynthesis.speak once inside a user gesture to unlock it
@@ -212,6 +225,27 @@ function speak(text) {
     utter.onerror = () => resolve();
 
     // Short delay prevents speech queue issues on some browsers
+    setTimeout(() => {
+      try { speechSynthesis.speak(utter); } catch (e) { resolve(); }
+    }, 40);
+  });
+}
+
+function speakEnglish(text) {
+  return new Promise((resolve) => {
+    if (!window.speechSynthesis) { resolve(); return; }
+    if (!englishVoice) englishVoice = findBestEnglishVoice();
+
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'en-US';
+    if (englishVoice) utter.voice = englishVoice;
+    utter.rate = 0.80;
+    utter.pitch = 1.05;
+    utter.volume = 1.0;
+
+    utter.onend = () => resolve();
+    utter.onerror = () => resolve();
+
     setTimeout(() => {
       try { speechSynthesis.speak(utter); } catch (e) { resolve(); }
     }, 40);
@@ -525,9 +559,10 @@ function startRound() {
   updateTopBar();
   roundActive = true;
 
-  // Speak prompt after cards animate in
-  setTimeout(() => {
-    speak(`איפה האות ${LETTER_PHONETICS[currentTarget]}`);
+  // Speak prompt after cards animate in: Hebrew phrase + English letter name separately
+  setTimeout(async () => {
+    await speak('איפה האות');
+    speakEnglish(LETTER_PHONETICS[currentTarget]);
   }, 430);
 }
 
@@ -555,11 +590,8 @@ function handleAnswer(tappedLetter) {
 
     (async () => {
       await speak('כל הכבוד');
-      if (isMirror) {
-        await speak(`נכון! גם ${currentTarget} וגם ${tappedLetter} הן האות ${name}`);
-      } else {
-        await speak(`זו האות ${name}`);
-      }
+      await speak('זו האות');
+      await speakEnglish(name);
     })();
 
     addStar();
@@ -659,7 +691,7 @@ function animateCard(letter, type) {
 
 function replayPrompt() {
   if (currentTarget) {
-    speak(`איפה האות ${LETTER_PHONETICS[currentTarget]}`);
+    speak('איפה האות').then(() => speakEnglish(LETTER_PHONETICS[currentTarget]));
   }
 }
 
