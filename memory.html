@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#a78bfa">
+  <title>משחק זיכרון אותיות</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&family=Frank+Ruhl+Libre:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="memory.css">
+</head>
+<body>
+
+  <header id="top-bar">
+    <a href="index.html" id="back-btn" aria-label="חזרה למשחק האות">←</a>
+    <div id="star-counter">
+      <span id="star-icon">★</span>
+      <span id="star-count">0</span>
+    </div>
+    <div id="pairs-counter">
+      <span id="pairs-found">0</span><span>/4</span>
+    </div>
+  </header>
+
+  <main id="game-screen">
+    <div id="cards-grid" role="group" aria-label="קלפי זיכרון"></div>
+  </main>
+
+  <!-- Celebration Screen -->
+  <div id="celebration-screen" hidden aria-live="assertive">
+    <div id="balloon-container" aria-hidden="true"></div>
+    <div id="celebration-content">
+      <div id="celebration-stars" aria-hidden="true">⭐⭐⭐</div>
+      <div id="celebration-text">כל הכבוד!<br>מצאת את כל הזוגות!</div>
+    </div>
+  </div>
+
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <button id="mute-btn" aria-label="השתק צלילים">🔊</button>
+
+  <script src="memory.js"></script>
+</body>
+</html>
