@@ -110,6 +110,21 @@ button {
 
 #parent-btn:active { opacity: 1; transform: scale(0.92); }
 
+#memory-btn {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+#memory-btn:active { opacity: 1; transform: scale(0.92); }
+
 /* ============================================================
    VOICE WARNING BANNER
    ============================================================ */

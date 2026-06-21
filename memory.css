@@ -1,0 +1,240 @@
+/* ── Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple:    #a78bfa;
+  --purple-dk: #7c3aed;
+  --bg:        #faf5ff;
+  --card-back: #7c3aed;
+  --card-front:#ffffff;
+  --matched:   #4ade80;
+  --matched-dk:#16a34a;
+  --radius:    18px;
+  --top-h:     56px;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Rubik', sans-serif;
+  touch-action: manipulation;
+}
+
+/* ── Top Bar ───────────────────────────────────────────── */
+#top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--top-h);
+  background: var(--purple-dk);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+}
+
+#back-btn {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+#star-counter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+#star-icon { color: #fbbf24; }
+
+#pairs-counter {
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 2px 12px;
+}
+
+/* ── Game Screen ───────────────────────────────────────── */
+#game-screen {
+  position: fixed;
+  top: var(--top-h);
+  bottom: 0;
+  left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+/* ── Cards Grid ────────────────────────────────────────── */
+#cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100dvh - var(--top-h) - 24px);
+  aspect-ratio: 2 / 1;
+}
+
+/* ── Card ──────────────────────────────────────────────── */
+.card {
+  perspective: 800px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner,
+.card.matched .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  user-select: none;
+}
+
+/* Back face */
+.card-back {
+  background: var(--card-back);
+  font-size: clamp(2rem, 8vw, 3.5rem);
+}
+
+.card-back::after {
+  content: '?';
+  color: rgba(255,255,255,0.6);
+  font-weight: 900;
+}
+
+/* Front face */
+.card-front {
+  background: var(--card-front);
+  transform: rotateY(180deg);
+  font-size: clamp(2.4rem, 10vw, 4.5rem);
+  font-weight: 900;
+  color: var(--purple-dk);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  border: 3px solid #e9d5ff;
+}
+
+.card-front.font-rubik      { font-family: 'Rubik', sans-serif; }
+.card-front.font-frank-ruhl { font-family: 'Frank Ruhl Libre', serif; }
+
+/* Matched state */
+.card.matched .card-front {
+  background: var(--matched);
+  border-color: var(--matched-dk);
+  color: #fff;
+}
+
+/* Wrong flash */
+@keyframes wrong-shake {
+  0%,100% { transform: rotateY(180deg) translateX(0); }
+  25%      { transform: rotateY(180deg) translateX(-6px); }
+  75%      { transform: rotateY(180deg) translateX(6px); }
+}
+.card.wrong .card-inner { animation: wrong-shake 0.35s ease; }
+
+/* Card entrance */
+@keyframes card-enter {
+  from { opacity: 0; transform: scale(0.75); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.card { animation: card-enter 0.3s ease both; }
+
+/* ── Celebration ───────────────────────────────────────── */
+#celebration-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(124,58,237,0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+#celebration-screen[hidden] { display: none; }
+
+#celebration-content {
+  text-align: center;
+  color: #fff;
+}
+#celebration-stars { font-size: 2.5rem; margin-bottom: 16px; }
+#celebration-text  { font-size: clamp(1.6rem, 6vw, 2.4rem); font-weight: 900; line-height: 1.3; }
+
+#balloon-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 190;
+}
+.balloon {
+  position: absolute;
+  bottom: -80px;
+  font-size: 3rem;
+  animation: balloon-rise 3.5s ease-in forwards;
+}
+@keyframes balloon-rise {
+  to { transform: translateY(-110vh) rotate(15deg); opacity: 0; }
+}
+
+/* ── Confetti Canvas ───────────────────────────────────── */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 150;
+}
+
+/* ── Mute Button ───────────────────────────────────────── */
+#mute-btn {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--purple-dk);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Landscape ─────────────────────────────────────────── */
+@media (orientation: landscape) {
+  #cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    aspect-ratio: unset;
+    height: 100%;
+    max-height: none;
+  }
+}
