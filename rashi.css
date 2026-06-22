@@ -277,6 +277,13 @@ button {
   animation: wrong-shake 0.42s ease !important;
 }
 
+/* Locked — cards inactive while audio plays */
+#cards-grid.locked .letter-card {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: default;
+}
+
 /* ============================================================
    MUTE BUTTON
    ============================================================ */
