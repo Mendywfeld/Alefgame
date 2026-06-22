@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#a78bfa">
-  <meta name="description" content="משחק לימוד אותיות עבריות לפעוטות">
-  <title>משחק האות</title>
+  <meta name="theme-color" content="#b45309">
+  <meta name="description" content="משחק לימוד כתב רש״י לילדים">
+  <title>משחק כתב רש״י</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="rashi.css">
 </head>
 <body>
 
@@ -21,8 +21,7 @@
       <span id="star-icon">★</span>
       <span id="star-count">0</span>
     </div>
-    <a href="rashi.html" id="rashi-btn" aria-label="משחק כתב רש״י">📜</a>
-    <a href="memory.html" id="memory-btn" aria-label="משחק זיכרון">🃏</a>
+    <a href="index.html" id="home-btn" aria-label="חזרה למשחק הראשי">🏠</a>
     <button id="parent-btn" aria-label="הגדרות הורים">⚙</button>
   </header>
 
@@ -33,16 +32,13 @@
 
   <!-- ─── Main Game Screen ─────────────────────────────────── -->
   <main id="game-screen">
-
     <div id="prompt-area">
       <button id="replay-btn" aria-label="השמע שוב">🔊</button>
     </div>
-
     <div id="cards-grid" role="group" aria-label="בחר את האות הנכונה"></div>
-
   </main>
 
-  <!-- ─── Celebration Screen (10-star milestone) ───────────── -->
+  <!-- ─── Celebration Screen ───────────────────────────────── -->
   <div id="celebration-screen" hidden aria-live="assertive">
     <div id="balloon-container" aria-hidden="true"></div>
     <div id="celebration-content">
@@ -115,12 +111,12 @@
     </div>
   </div>
 
-  <!-- ─── Confetti Canvas (injected particles) ─────────────── -->
+  <!-- ─── Confetti Canvas ───────────────────────────────────── -->
   <canvas id="confetti-canvas" aria-hidden="true"></canvas>
 
   <!-- ─── Mute Toggle ──────────────────────────────────────── -->
   <button id="mute-btn" aria-label="השתק צלילים">🔊</button>
 
-  <script src="script.js"></script>
+  <script src="rashi.js"></script>
 </body>
 </html>

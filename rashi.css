@@ -1,3 +1,29 @@
+/* ── Noto Rashi Hebrew font (self-hosted) ───────────────── */
+
+@font-face {
+  font-family: 'Noto Rashi Hebrew';
+  src: url('assets/fonts/noto-rashi-hebrew-variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Rashi Hebrew';
+  src: url('assets/fonts/noto-rashi-hebrew-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Rashi Hebrew';
+  src: url('assets/fonts/noto-rashi-hebrew-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ============================================================
    RESET & BASE
    ============================================================ */
@@ -21,11 +47,13 @@
   --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.12);
   --color-ok: #4caf50;
   --color-bad: #ff6b6b;
-  --bg: linear-gradient(160deg, #e0f4ff 0%, #fce4ec 55%, #f3e5f5 100%);
-  --card-1: #ff6b6b;
-  --card-2: #4ecdc4;
-  --card-3: #ffd93d;
-  --card-4: #6bcb77;
+  --bg: linear-gradient(160deg, #fffdf0 0%, #fef3c7 55%, #fde68a 100%);
+  --card-1: #ef4444;
+  --card-2: #f97316;
+  --card-3: #eab308;
+  --card-4: #22c55e;
+  --amber:    #b45309;
+  --amber-lt: #d97706;
 }
 
 html {
@@ -63,11 +91,11 @@ button {
   align-items: center;
   justify-content: space-between;
   padding: 0 14px;
-  background: rgba(255, 255, 255, 0.30);
+  background: rgba(254, 243, 199, 0.45);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 100;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(253, 230, 138, 0.6);
 }
 
 #star-counter {
@@ -82,16 +110,6 @@ button {
 
 #star-counter.star-pop {
   animation: star-pop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-#progress-indicator {
-  font-size: 15px;
-  font-weight: 700;
-  color: rgba(80, 40, 120, 0.85);
-  background: rgba(255, 255, 255, 0.55);
-  padding: 4px 12px;
-  border-radius: 20px;
-  letter-spacing: 0.5px;
 }
 
 #parent-btn {
@@ -110,8 +128,7 @@ button {
 
 #parent-btn:active { opacity: 1; transform: scale(0.92); }
 
-#rashi-btn,
-#memory-btn {
+#home-btn {
   width: 44px;
   height: 44px;
   background: rgba(255, 255, 255, 0.45);
@@ -124,8 +141,8 @@ button {
   opacity: 0.85;
   transition: opacity 0.2s;
 }
-#rashi-btn:active,
-#memory-btn:active { opacity: 1; transform: scale(0.92); }
+
+#home-btn:active { opacity: 1; transform: scale(0.92); }
 
 /* ============================================================
    VOICE WARNING BANNER
@@ -178,7 +195,7 @@ button {
   height: 80px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #b45309, #d97706);
   color: white;
   font-size: 38px;
   box-shadow: var(--shadow);
@@ -213,7 +230,8 @@ button {
   border: none;
   border-radius: var(--radius-card);
   font-size: var(--letter-sz);
-  font-weight: 900;
+  font-weight: 700;
+  font-family: 'Noto Rashi Hebrew', 'Arial Hebrew', serif;
   color: rgba(0, 0, 0, 0.72);
   box-shadow: var(--shadow);
   display: flex;
@@ -305,7 +323,7 @@ button {
 #celebration-screen {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -410,14 +428,14 @@ button {
 #parent-gate-inner h2 {
   font-size: 22px;
   font-weight: 900;
-  color: #3730a3;
+  color: #78350f;
   margin-bottom: 18px;
 }
 
 #math-question {
   font-size: 44px;
   font-weight: 900;
-  color: #7c3aed;
+  color: #b45309;
   margin-bottom: 18px;
   letter-spacing: 2px;
 }
@@ -429,14 +447,14 @@ button {
   font-weight: 700;
   font-family: inherit;
   text-align: center;
-  border: 3px solid #a78bfa;
+  border: 3px solid #fbbf24;
   border-radius: 14px;
   outline: none;
   margin-bottom: 18px;
   transition: border-color 0.2s;
 }
 
-#math-answer:focus { border-color: #7c3aed; }
+#math-answer:focus { border-color: #b45309; }
 
 #gate-buttons {
   display: flex;
@@ -460,9 +478,9 @@ button {
 }
 
 #gate-submit {
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #b45309, #d97706);
   color: white;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.4);
 }
 
 #gate-cancel:active, #gate-submit:active { transform: scale(0.93); }
@@ -505,7 +523,7 @@ button {
   font-size: 22px;
   font-weight: 900;
   text-align: center;
-  color: #3730a3;
+  color: #78350f;
   margin-bottom: 20px;
 }
 
@@ -537,7 +555,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: #f8fafc;
+  background: #fefce8;
   border-radius: 14px;
   padding: 16px;
   margin-bottom: 18px;
@@ -556,7 +574,7 @@ button {
 #dashboard-toggles input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: #7c3aed;
+  accent-color: #b45309;
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -575,7 +593,7 @@ button {
 }
 
 #stats-table th {
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #b45309, #d97706);
   color: white;
   padding: 10px 8px;
   text-align: center;
@@ -598,7 +616,8 @@ button {
 
 .letter-cell {
   font-size: 26px;
-  font-weight: 900;
+  font-weight: 700;
+  font-family: 'Noto Rashi Hebrew', 'Arial Hebrew', serif;
   line-height: 1;
 }
 
@@ -613,12 +632,12 @@ button {
   padding: 14px;
   border: none;
   border-radius: 14px;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #b45309, #d97706);
   color: white;
   font-size: 17px;
   font-weight: 700;
   font-family: inherit;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.4);
   transition: transform 0.1s, opacity 0.1s;
 }
 
