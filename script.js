@@ -549,6 +549,16 @@ let currentTarget = null;
 let currentCards  = [];
 let roundActive   = false;
 
+function lockCards() {
+  roundActive = false;
+  document.getElementById('cards-grid').classList.add('locked');
+}
+
+function unlockCards() {
+  roundActive = true;
+  document.getElementById('cards-grid').classList.remove('locked');
+}
+
 function startRound() {
   const unlocked = getUnlockedLetters();
   currentTarget  = selectTargetLetter(unlocked);
@@ -557,12 +567,13 @@ function startRound() {
 
   renderCards(currentCards);
   updateTopBar();
-  roundActive = true;
+  lockCards();
 
-  // Speak prompt after cards animate in: Hebrew phrase + English letter name separately
+  // Cards stay locked until both utterances finish
   setTimeout(async () => {
     await speak('איפה האות');
-    speakEnglish(LETTER_PHONETICS[currentTarget]);
+    await speakEnglish(LETTER_PHONETICS[currentTarget]);
+    unlockCards();
   }, 430);
 }
 
@@ -570,7 +581,7 @@ function handleAnswer(tappedLetter) {
   if (!roundActive) return;
 
   if (isCorrectAnswer(tappedLetter, currentTarget)) {
-    roundActive = false;
+    lockCards();
 
     recordCorrect(currentTarget);
     playSound('correct');
@@ -609,8 +620,8 @@ function handleAnswer(tappedLetter) {
     recordWrong(currentTarget);
     playSound('wrong');
     animateCard(tappedLetter, 'wrong');
-    setTimeout(() => speak('נסה שוב'), 80);
-    // roundActive stays true — child keeps trying
+    lockCards();
+    setTimeout(() => speak('נסה שוב').then(() => unlockCards()), 80);
   }
 }
 

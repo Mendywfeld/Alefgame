@@ -316,6 +316,7 @@ function onCardClick(idx) {
 
   card.state = 'flipped';
   flipCard(idx, true);
+  speakEnglish(LETTER_PHONETICS[card.letter]);
   flipped.push(idx);
 
   if (flipped.length < 2) return;
@@ -331,13 +332,6 @@ function onCardClick(idx) {
     markMatched(a, b);
     matchedCount++;
     updatePairsCounter();
-
-    const letter = cards[a].letter;
-    (async () => {
-      await speak('כל הכבוד');
-      await speak('זו האות');
-      await speakEnglish(LETTER_PHONETICS[letter]);
-    })();
 
     lockBoard = false;
 
