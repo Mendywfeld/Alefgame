@@ -221,12 +221,18 @@ function speak(text) {
     utter.pitch = 1.05;
     utter.volume = 1.0;
 
-    utter.onend = () => resolve();
-    utter.onerror = () => resolve();
+    // iOS silently drops utterances before the first user gesture without
+    // firing onend/onerror — a watchdog guarantees this promise resolves
+    // so game flow (card locking) is never stuck waiting on audio
+    let done = false;
+    const finish = () => { if (!done) { done = true; resolve(); } };
+    utter.onend = finish;
+    utter.onerror = finish;
+    setTimeout(finish, 3500);
 
     // Short delay prevents speech queue issues on some browsers
     setTimeout(() => {
-      try { speechSynthesis.speak(utter); } catch (e) { resolve(); }
+      try { speechSynthesis.speak(utter); } catch (e) { finish(); }
     }, 40);
   });
 }
@@ -243,11 +249,14 @@ function speakEnglish(text) {
     utter.pitch = 1.05;
     utter.volume = 1.0;
 
-    utter.onend = () => resolve();
-    utter.onerror = () => resolve();
+    let done = false;
+    const finish = () => { if (!done) { done = true; resolve(); } };
+    utter.onend = finish;
+    utter.onerror = finish;
+    setTimeout(finish, 3500);
 
     setTimeout(() => {
-      try { speechSynthesis.speak(utter); } catch (e) { resolve(); }
+      try { speechSynthesis.speak(utter); } catch (e) { finish(); }
     }, 40);
   });
 }
@@ -569,8 +578,10 @@ function startRound() {
   updateTopBar();
   lockCards();
 
-  // Cards stay locked until both utterances finish
+  // Cards stay locked until both utterances finish.
+  // Before the first user gesture speech cannot play (iOS) — don't lock.
   setTimeout(async () => {
+    if (!speechUnlocked) unlockCards();
     await speak('איפה האות');
     await speakEnglish(LETTER_PHONETICS[currentTarget]);
     unlockCards();
